@@ -36,5 +36,19 @@ export class AppComponent {
     //this.counter.set(this.counter() + 1);
 
     this.counter.update(val => val + 1);
+
+    // avoid update signal properties directly
+    //this.course().title = "Hello World";
+
+    this.course.set({
+      id: 1,
+      title: "Hello World"
+    })
+
+    // avoid update signal properties directly
+    //this.courses().push("Angular Core Deep Dive");
+
+    this.courses.update(courses => [...courses, "Angular Core Deep Dive"]);
+
   }
 }
