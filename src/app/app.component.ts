@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,5 +9,32 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'angular-signal';
+  
+
+  counter = signal(0);
+
+
+  course = signal({
+    id: 1,
+    title: "Angular for Beginners"
+  })
+
+
+  courses = signal([
+    "Angular For Beginners",
+    "Reactive Angular Course"
+  ])
+
+  constructor(){
+
+
+    const readOnly = this.counter.asReadonly();
+  }
+
+  increment() {
+
+    //this.counter.set(this.counter() + 1);
+
+    this.counter.update(val => val + 1);
+  }
 }
