@@ -1,4 +1,4 @@
-import { Component, computed, effect, signal } from '@angular/core';
+import { Component, computed, effect, EffectRef, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -12,6 +12,7 @@ export class AppComponent {
   
   counter = signal(0);
   multiplier: number = 0;
+  effectRef: EffectRef;
 
   derivedCounter =  computed(() => {
 
@@ -42,12 +43,19 @@ export class AppComponent {
     //signal api asReadonly() method returns a signal copy as read only true
     //const readOnly = this.counter.asReadonly();
 
-    effect( () => {
+    this.effectRef = effect( (onCleanUp) => {
+
+      onCleanUp(() => {
+        console.log(`Cleanup occoured`);
+      })
+
       const counterValue = this.counter();
 
       const derivedCounterValue = this.derivedCounter();
 
       console.log(` counter: ${counterValue} / derived counter: ${derivedCounterValue}`);
+    }, {
+      manualCleanup: true
     })
 
 
@@ -75,5 +83,11 @@ export class AppComponent {
 
   incrementMultiplier(){
     this.multiplier++;
+  }
+
+
+  onCleanUp(){
+
+      this.effectRef.destroy();
   }
 }
