@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -16,7 +16,7 @@ export class AppComponent {
   derivedCounter =  computed(() => {
 
     const counter = this.counter();  
-    
+
     if (this.multiplier >= 10) {
 
       return counter * 10;
@@ -39,7 +39,18 @@ export class AppComponent {
 
   constructor(){
 
-    const readOnly = this.counter.asReadonly();
+    //signal api asReadonly() method returns a signal copy as read only true
+    //const readOnly = this.counter.asReadonly();
+
+    effect( () => {
+      const counterValue = this.counter();
+
+      const derivedCounterValue = this.derivedCounter();
+
+      console.log(` counter: ${counterValue} / derived counter: ${derivedCounterValue}`);
+    })
+
+
   }
 
   increment() {
