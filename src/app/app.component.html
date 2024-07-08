@@ -10,12 +10,19 @@
   <div class="courses">
     
     <div>Counter Value: {{ counter() }}</div>  
-    
-    <div>Course title: {{ course().title }}</div>  
 
-    <div>Courses: {{ courses().join(", ") }}</div>  
+    <div>Derived Value: {{ derivedCounter() }}</div>  
+
+    <div>Multiplier Value: {{ multiplier }}</div>  
+
+    
+    <!-- <div>Course title: {{ course().title }}</div>  
+
+    <div>Courses: {{ courses().join(", ") }}</div>   -->
 
     <button (click)="increment()">Increment</button>
+
+    <button (click)="incrementMultiplier()">++ Multiplier</button>
 
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -10,15 +10,27 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   
-
   counter = signal(0);
+  multiplier: number = 0;
 
+  derivedCounter =  computed(() => {
+
+    const counter = this.counter();  
+    
+    if (this.multiplier >= 10) {
+
+      return counter * 10;
+
+    } else {
+      return 0;
+    }
+    
+  })
 
   course = signal({
     id: 1,
     title: "Angular for Beginners"
   })
-
 
   courses = signal([
     "Angular For Beginners",
@@ -26,7 +38,6 @@ export class AppComponent {
   ])
 
   constructor(){
-
 
     const readOnly = this.counter.asReadonly();
   }
@@ -39,16 +50,19 @@ export class AppComponent {
 
     // avoid update signal properties directly
     //this.course().title = "Hello World";
+    //this.courses().push("Angular Core Deep Dive");
 
     this.course.set({
       id: 1,
       title: "Hello World"
     })
 
-    // avoid update signal properties directly
-    //this.courses().push("Angular Core Deep Dive");
-
     this.courses.update(courses => [...courses, "Angular Core Deep Dive"]);
 
+  }
+
+
+  incrementMultiplier(){
+    this.multiplier++;
   }
 }
